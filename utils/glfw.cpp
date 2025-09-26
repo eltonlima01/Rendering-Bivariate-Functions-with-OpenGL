@@ -10,7 +10,7 @@ int glfw::windowWidth = 0, glfw::windowHeight = 0;
 int glfw::wWBefore = 0, glfw::wHBefore = 0;
 int glfw::windowXPos = 0, glfw::windowYPos = 0;
 
-bool glfw::isFullscreen = true;
+bool glfw::isFullscreen = false;
 
 // ========== MAIN METHODS ========== //
 
@@ -35,7 +35,7 @@ void glfw::init ()
     windowWidth = vidMode->width * 0.5f;
     windowHeight = vidMode->height * 0.5f;
 
-    window = glfwCreateWindow (windowWidth, windowHeight, "NULL", NULL, NULL);
+    window = glfwCreateWindow (windowWidth, windowHeight, "Rendering Bivariate Functions with OpenGL", NULL, NULL);
     glfwMakeContextCurrent (window);
     glfwSwapInterval (1);
 
@@ -55,18 +55,19 @@ void glfw::init ()
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     framebufferSizeCallback (window, windowWidth, windowHeight);
-    glfwSetWindowMonitor (window, monitor, 0, 0, vidMode->width, vidMode->height, vidMode->refreshRate);
+}
+
+void glfw::terminate ()
+{
+    glfwTerminate ();
 }
 
 // ========== GLFW CALLBACKS ========== //
 
 void glfw::framebufferSizeCallback (GLFWwindow *window, GLsizei width, GLsizei height)
 {
-    if (!isFullscreen)
-    {
         windowHeight = static_cast<int>(height);
         windowWidth = static_cast<int>(width);
-    }
 
     glViewport (0, 0, width, height);
     camera::setProjectionMatrix (static_cast<GLfloat>(width), static_cast<GLfloat>(height));
@@ -82,12 +83,13 @@ void glfw::keyCallback (GLFWwindow *window, int key, int scancode, int action, i
         if (isFullscreen)
         {
             glfwGetWindowPos (window, &windowXPos, &windowYPos);
+            glfwGetWindowSize (window, &wWBefore, &wHBefore);
 
             glfwSetWindowMonitor (window, monitor, 0, 0, vidMode->width, vidMode->height, vidMode->refreshRate);
         }
         else
         {
-            glfwSetWindowMonitor (window, NULL, windowXPos, windowYPos, windowWidth, windowHeight, 0);
+            glfwSetWindowMonitor (window, NULL, windowXPos, windowYPos, wWBefore, wHBefore, 0);
         }
     }
 

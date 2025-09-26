@@ -26,7 +26,7 @@ class camera
         static float angleYaw, anglePitch;
 
         static constexpr float sensitivity = 0.1f;
-        static constexpr float radius = 15.0f;
+        static constexpr float radius = 10.0f;
 
         static void setCameraVectors ();
 };

@@ -1,18 +1,24 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -MMD -MP
+CXXFLAGS = -Iinclude -Wall -Wextra -std=c++17 -MMD -MP -Iinclude/imgui -Iinclude/imgui/backends
 LIBS = -lglfw
 
-SRC = \
-src/main.cpp \
-include/glad/glad.c \
-shaders/Shader.cpp \
-utils/glfw.cpp \
-utils/camera.cpp \
-model/world.cpp \
-model/Points.cpp \
-model/private/Axis.cpp \
-model/private/Grid.cpp \
-model/private/Ground.cpp
+SRC = src/main.cpp \
+	include/glad/glad.c \
+	shaders/Shader.cpp \
+	utils/glfw.cpp \
+	utils/camera.cpp \
+	model/world.cpp \
+	model/points.cpp \
+	model/private/Axis.cpp \
+	model/private/Grid.cpp \
+	model/private/Ground.cpp
+
+SRC += include/imgui/imgui.cpp \
+	include/imgui/imgui_draw.cpp \
+	include/imgui/imgui_tables.cpp \
+	include/imgui/imgui_widgets.cpp \
+	include/imgui/backends/imgui_impl_glfw.cpp \
+	include/imgui/backends/imgui_impl_opengl3.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 OBJ := $(OBJ:.c=.o)

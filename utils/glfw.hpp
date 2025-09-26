@@ -2,7 +2,7 @@
 #define GLFW_HPP
 
 #include "../include/glad/glad.h"
-#include "../include/GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 #include "camera.hpp"
 
 class glfw
@@ -12,12 +12,14 @@ class glfw
         static GLFWmonitor *monitor;
         static const GLFWvidmode *vidMode;
 
+        static int windowWidth, windowHeight;
+
         static void init ();
+        static void terminate ();
 
     private:
         static int wWBefore, wHBefore;
         static int windowXPos, windowYPos;
-        static int windowWidth, windowHeight;
 
         static bool isFullscreen;
 
